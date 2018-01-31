@@ -1,0 +1,63 @@
+\RequirePackage{bm}
+\RequirePackage[para]{he-she}
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts} % for \mathbb
+\RequirePackage{hyperref}
+
+%\RequirePackage{subcaption}
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+\RequirePackage{accents}
+
+% vector command
+\renewcommand{\vec}[1]{\bm{#1}}
+% derivative of vector
+\newcommand{\dvec}[1]{\dot{\vec{#1}}}
+% matrix command
+\newcommand{\mat}[1]{\ensuremath{[#1]}}
+% tensor command - more convenient than matrix command
+\newcommand{\ten}[1]{\mat{#1}}
+% derivative of matrix
+\newcommand{\dmat}[1]{\mat{\dot{#1}}}
+% shortcut for quadratic form: x^T * A * x
+\newcommand{\quadr}[2]{\ensuremath{#1^T #2 #1}}
+% integral function
+\newcommand{\intf}[4]{\int_{#1}^{#2} \! #3 \, \mathrm{d}#4}
+% command for mathrm{diag}
+\newcommand{\diag}{\mathrm{diag}}
+% command for writing normal distributions with mathcal{N}
+\newcommand{\gauss}[2]{\ensuremath{\mathcal{N}(#1,#2)}}
+% command for writing the expectation using compact angle braces
+\newcommand{\E}[1]{\ensuremath{\langle #1 \rangle}}
+% time derivative command
+\newcommand{\ddt}[1]{\ensuremath{\frac{d#1}{dt}}}
+% derivative command
+\newcommand{\ddarg}[2]{\ensuremath{\frac{d#1}{d#2}}}
+% partial derivative command
+\newcommand{\pparg}[2]{\ensuremath{\frac{\partial #1}{\partial #2}}}
+% DOF command because why not
+\newcommand{\dof}[1]{#1DoF}
+% naive
+\newcommand{\naive}{na\"{\i}ve}
+% argmax
+\newcommand{\argmax}{\ensuremath{\mathrm{argmax}}}
+% argmin
+\newcommand{\argmin}{\ensuremath{\mathrm{argmin}}}
+% measurement notation
+\newcommand{\meas}[1]{\tilde{#1}}
+% estimate notation
+\newcommand{\est}[1]{\hat{#1}}
+% unit vector
+\newcommand{\uvec}[1]{\bar{\vec{#1}}}
+% bracket operator
+\newcommand{\br}[2]{[#1]_{#2}}
+% macro for writing a vector divided by its norm:
+\newcommand{\normvec}[1]{\ensuremath{\frac{#1}{\|#1\|}}}
+% command for degree symbol
+\renewcommand{\deg}{\ensuremath{^{\circ}}}
+% code command
+\newcommand{\code}[1]{\texttt{#1}}
+% upper value of a game payoff or value
+\newcommand{\boundu}[1]{\bar{#1}}
+% lower value of a game payoff or value
+\newcommand{\boundl}[1]{\underaccent{\bar}{#1}}
