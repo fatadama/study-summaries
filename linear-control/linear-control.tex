@@ -1,0 +1,202 @@
+\documentclass[11pt,landscape]{article}
+% we can get a little back by switching to 10pt, which is readable
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{hyperref}
+
+\usepackage{bm} %required for bold in math mode for greek symbols
+\usepackage{amsmath} %for bmatrix
+\usepackage{ulem} % for \sout used in V with horizontal strikethrough for volume symbol
+\usepackage{amsfonts} %for math script font
+\usepackage{algpseudocode}
+
+\usepackage{../tdw}
+
+% To make this come out properly in landscape mode, do one of the following
+% 1.
+%  pdflatex latexsheet.tex
+%
+% 2.
+%  latex latexsheet.tex
+%  dvips -P pdf  -t landscape latexsheet.dvi
+%  ps2pdf latexsheet.ps
+
+
+% If you're reading this, be prepared for confusion.  Making this was
+% a learning experience for me, and it shows.  Much of the placement
+% was hacked in; if you make it better, let me know...
+
+
+% 2008-04
+% Changed page margin code to use the geometry package. Also added code for
+% conditional page margins, depending on paper size. Thanks to Uwe Ziegenhagen
+% for the suggestions.
+
+% 2006-08
+% Made changes based on suggestions from Gene Cooperman. <gene at ccs.neu.edu>
+
+
+% To Do:
+% \listoffigures \listoftables
+% \setcounter{secnumdepth}{0}
+
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+	{ \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+
+% Turn off header and footer
+\pagestyle{empty}
+ 
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols}{2}%  number of columns
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+%\begin{center} \Large{\textbf{\LaTeXe\ Cheat Sheet}} \\
+%\end{center}
+
+%\section{Document classes}
+%\begin{tabular}{@{}ll@{}}
+%\verb!book!    & Default is two-sided. \\
+%\verb!report!  & No \verb!\part! divisions. \\
+%\verb!article! & No \verb!\part! or \verb!\chapter! divisions. \\
+%\verb!letter!  & Letter (?). \\
+%\verb!slides!  & Large sans-serif font.
+%\end{tabular}
+
+%Used at the very beginning of a document:
+%\verb!\documentclass{!\textit{class}\verb!}!.  Use
+%\verb!\begin{document}! to start contents and \verb!\end{document}! to end the document.
+
+
+%\subsection{Common \texttt{documentclass} options}
+%\newlength{\MyLen}
+%\settowidth{\MyLen}{\texttt{letterpaper}/\texttt{a4paper} \ }
+%\begin{tabular}{@{}p{\the\MyLen}%
+%                @{}p{\linewidth-\the\MyLen}@{}}
+%\texttt{10pt}/\texttt{11pt}/\texttt{12pt} & Font size. \\
+%\texttt{letterpaper}/\texttt{a4paper} & Paper size. \\
+%\texttt{twocolumn} & Use two columns. \\
+%\texttt{twoside}   & Set margins for two-sided. \\
+%\texttt{landscape} & Landscape orientation.  Must use
+%                     \texttt{dvips -t landscape}. \\
+%\texttt{draft}     & Double-space lines.
+%\end{tabular}
+%
+%Usage:
+%\verb!\documentclass[!\textit{opt,opt}\verb!]{!\textit{class}\verb!}!.
+
+\section{Transfer functions}
+\begin{tabular}{@{}ll@{}}
+Final value theorem & $\lim_{t\rightarrow\infty} f(t) = \lim_{s\rightarrow 0} s F(s)$, $sF(s)$ must be stable \\
+Laplace Transform (one-sided) & $\mathcal{L}(f(t)) = \intf{0}{\infty}{f(\tau)e^{-s\tau}}{\tau}$ \\
+	ERO & elementary row operations
+\end{tabular}
+
+\section{Routh-Hurwitz stability}
+Characteristic equation: $a(s) = \sum_{i=0}^n a_i s^{n-i}$
+\\
+Fully populate the array:\\
+\begin{tabular}{ccccc}
+$s^n$ & $a_0$ & $a_1$ & $a_2$ & \dots \\
+$s^{n-1}$ & $a_1$ & $a_3$ & $a_5$ & \dots \\
+$s^{n-2}$ & $b_1$ & $b_2$ & $b_3$ & \dots \\
+$\vdots$ & {}& {}& {}& {}
+\end{tabular}
+\\
+Each $b_i$ is computed from the negative of the determinant of the 2 x 2 matrix above and to the right of it, divided by the far-left entry in the row. If all entries in the first column are positive after population, then all roots are in the LHP. Otherwise, the number of RHP roots is equal to the number of sign changes in the column.
+
+If one of the far-left coefficients is zero, the method must be altered to account.
+
+\section{Definitions}
+\begin{tabular}{@{}ll@{}}
+	rise time & time to reach set point \\
+	{} & $t_r \approx 1.8/\omega_n$ \\
+	settling time & time for transients to decay \\
+	{} & $t_s \approx 4.6/(\zeta\omega_n)$ \\
+	overshoot & \begin{tabular}{l} maximum amount a system exceeds setpoint, normalized by \\ the setpoint value\end{tabular} \\
+	{} & $M_p \approx e^{-\pi\zeta/\sqrt{1-\zeta^2}}$\\
+	peak time & time to reach max overshoot \\
+	{} & $t_p \approx \pi/\omega_d$ \\
+	BIBO stability & bounded input-bounded output stability \\
+	{} & implied by $\intf{-\infty}{\infty}{|h(\tau)|}{\tau}$, $h(t)$ = impulse response
+\end{tabular}
+
+\section{Two-phase simplex method}
+\begin{tabular}{l}
+	\textbf{Phase (i)}\\
+	Append auxiliary $a_i>0$ to each constraint equation where $x_i=0$ is not a BFS. \\
+	Make the cost function $max \ Z = -\sum_i a_i$ \\
+	Use EROs to eliminate $a_i$ from the cost function \\
+	Solve the resulting tableau. Solution has zero cost even if some $a_i \neq 0$; \\
+	Infeasible otherwise - violates original constraint\\
+	\textbf{Phase (ii)}\\
+	Start with the auxiliary tableau\\
+	Eliminate columns with the auxiliary variables \\
+	Replace the cost function by the original problem's \\
+	Use EROs to eliminate the current basis variables from the cost function \\
+	Solve the resulting tableau
+\end{tabular}
+
+\section{big-M method}
+\begin{tabular}{l}
+Append auxiliary variables as needed; these are in starting basis \\
+For a maximization problem append $ -\sum_i M a_i$ to the cost function \\
+Use EROs to eliminate the $a_i$ from row 0 of the tableau \\
+Treat M as $M\rightarrow \infty$ and solve the tableau \\
+After solving, if all $a_i = 0$ then the solution is optimal for the original LP \\
+Any $a_j > 0$ indicate infeasible LP
+\end{tabular}
+
+\end{multicols}
+\end{document}
