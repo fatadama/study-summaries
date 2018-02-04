@@ -154,7 +154,11 @@ $s^{n-2}$ & $b_1$ & $b_2$ & $b_3$ & \dots \\
 $\vdots$ & {}& {}& {}& {}
 \end{tabular}
 \\
-Each $b_i$ is computed from the negative of the determinant of the 2 x 2 matrix above and to the right of it, divided by the far-left entry in the row. If all entries in the first column are positive after population, then all roots are in the LHP. Otherwise, the number of RHP roots is equal to the number of sign changes in the column.
+Each entry $A_{i,j} = A_{i-1,1}^{-1} det(\begin{bmatrix}
+A_{i-2,1} & A_{i-2,j+1}\\
+A_{i-1,1} & A_{i-1,j+1}
+\end{bmatrix})$.
+If all entries in the first column are positive after population, then all roots are in the LHP. Otherwise, the number of RHP roots is equal to the number of sign changes in the column.
 
 If one of the far-left coefficients is zero, the method must be altered to account.
 
@@ -170,33 +174,7 @@ If one of the far-left coefficients is zero, the method must be altered to accou
 	{} & $t_p \approx \pi/\omega_d$ \\
 	BIBO stability & bounded input-bounded output stability \\
 	{} & implied by $\intf{-\infty}{\infty}{|h(\tau)|}{\tau}$, $h(t)$ = impulse response
-\end{tabular}
-
-\section{Two-phase simplex method}
-\begin{tabular}{l}
-	\textbf{Phase (i)}\\
-	Append auxiliary $a_i>0$ to each constraint equation where $x_i=0$ is not a BFS. \\
-	Make the cost function $max \ Z = -\sum_i a_i$ \\
-	Use EROs to eliminate $a_i$ from the cost function \\
-	Solve the resulting tableau. Solution has zero cost even if some $a_i \neq 0$; \\
-	Infeasible otherwise - violates original constraint\\
-	\textbf{Phase (ii)}\\
-	Start with the auxiliary tableau\\
-	Eliminate columns with the auxiliary variables \\
-	Replace the cost function by the original problem's \\
-	Use EROs to eliminate the current basis variables from the cost function \\
-	Solve the resulting tableau
-\end{tabular}
-
-\section{big-M method}
-\begin{tabular}{l}
-Append auxiliary variables as needed; these are in starting basis \\
-For a maximization problem append $ -\sum_i M a_i$ to the cost function \\
-Use EROs to eliminate the $a_i$ from row 0 of the tableau \\
-Treat M as $M\rightarrow \infty$ and solve the tableau \\
-After solving, if all $a_i = 0$ then the solution is optimal for the original LP \\
-Any $a_j > 0$ indicate infeasible LP
-\end{tabular}
+\end{tabular} 	 	
 
 \end{multicols}
 \end{document}
