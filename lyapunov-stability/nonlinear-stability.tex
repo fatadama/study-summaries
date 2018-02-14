@@ -1,0 +1,35 @@
+
+\chapter{Nonlinear system stability}
+
+\section{Linearization test}
+
+If the linearized system's eigenvalues all satisfy $Re(\lambda_i) < 0$, then the nonlinear system is stable.
+
+If the any eigenvalues of the linearized system have positive real part, the nonlinear system is unstable.
+
+If any eigenvalue has zero real part, nothing about stability of the nonlinear system is concluded.
+
+\section{Lyapunov's direct method}
+
+Lyapunov's direct method provides a test for stability of a system $\dvec{x} = f(\vec{x},t)$ about an equilibrium point $\vec{x}^*$. A precondition for the test is the existence of function $V(\vec{x})$ having the following three properties: (1) $V(\vec{x}^*) = 0$; (2) $V(\vec{x}\neq \vec{x}^*) > 0, \vec{x}\in W$; (3) $\dot{V}(\vec{x}^*) = 0$.
+
+If the Lyapunov function may satisfy the following additional conditions, proving certain stability properties:
+
+\begin{itemize}
+	\item $\dot{V}(\vec{x}\neq\vec{x}^*) \leq 0, \vec{x}\in W$ $\rightarrow$ the system is \textbf{locally stable} (or locally marginally stable).
+	\item $\dot{V}(\vec{x}\neq\vec{x}^*) < 0, \vec{x}\in W$ $\rightarrow$ the system is \textbf{locally asymptotically stable} ($\vec{x} \in W$ tends to $\vec{x}^*$ as $t\rightarrow\infty$).
+	\item $V(\vec{x})$ is radially unbounded AND $\dot{V}(\vec{x}) < 0 \ \forall \ \vec{x}\neq\vec{x}^*$ $\rightarrow$ the system is \textbf{globally asymptotically stable}.
+	\item $\dot{V}(\vec{x}\neq\vec{x}^*) > 0, \vec{x}\in W$ $\rightarrow$ the system is \textbf{unstable}.
+\end{itemize}
+
+\section{Mukherjee and Chen's theorem}
+
+Sometimes $\dot{V}(\vec{x}\neq\vec{x}^*) \leq 0$ when the system is truly asymptotically stable. An extended test exists provided that $\dot{V}(\vec{x}\neq\vec{x}^*) < 0 \ \forall \ \vec{x} \in Z \subset W$.
+Motion is asymptotically stable provided that $V(\vec{x})$ is a Lyapunov function and the following are satisfied:
+
+\begin{enumerate}
+	\item $\dot{V}(\vec{x}\neq\vec{x}^*) < 0 \ \forall \ \vec{x} \in Z \subset W$
+	\item $ \frac{d^i V}{dt^i} (\vec{x}) = 0 \ \forall \ \vec{x} \in Z, i = 2,\dots,k-1$
+	\item $ \frac{d^k V}{dt^k} (\vec{x}^*) = 0$
+	\item $ \frac{d^k V}{dt^k} (\vec{x}) < 0 \ \forall \ \vec{x} \in Z, k = \mathrm{odd}$
+\end{enumerate}
