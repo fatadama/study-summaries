@@ -144,11 +144,11 @@ Laplace Transform (one-sided) & $\mathcal{L}(f(t)) = \intf{0}{\infty}{f(\tau)e^{
 \end{tabular}
 
 \section{Routh-Hurwitz stability}
-Characteristic equation: $a(s) = \sum_{i=0}^n a_i s^{n-i}$
+Characteristic equation: $a(s) = \sum_{i=0}^n a_i s^{n-i} = a_0 s^n + a_1 s^{n-1} + a_2 s^{n-2} + \dots a_n$
 \\
 Fully populate the array:\\
 \begin{tabular}{ccccc}
-$s^n$ & $a_0$ & $a_1$ & $a_2$ & \dots \\
+$s^n$ & $a_0$ & $a_2$ & $a_4$ & \dots \\
 $s^{n-1}$ & $a_1$ & $a_3$ & $a_5$ & \dots \\
 $s^{n-2}$ & $b_1$ & $b_2$ & $b_3$ & \dots \\
 $\vdots$ & {}& {}& {}& {}
@@ -157,8 +157,9 @@ $\vdots$ & {}& {}& {}& {}
 Each entry $A_{i,j} = A_{i-1,1}^{-1} det(\begin{bmatrix}
 A_{i-2,1} & A_{i-2,j+1}\\
 A_{i-1,1} & A_{i-1,j+1}
-\end{bmatrix})$.
-If all entries in the first column are positive after population, then all roots are in the LHP. Otherwise, the number of RHP roots is equal to the number of sign changes in the column.
+\end{bmatrix}), i > 2$.
+If all entries in the first column are positive after population, then all roots are in the LHP.
+Otherwise, the number of RHP roots is equal to the number of sign changes in the column.
 
 If one of the far-left coefficients is zero, the method must be altered to account.
 
