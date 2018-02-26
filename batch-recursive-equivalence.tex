@@ -1,0 +1,128 @@
+
+\chapter{Estimation}
+
+Here a linear discrete-time model is assumed with scalar measurements, to avoid the tedious matrix calculations that are ultimately a distraction to the derivation.
+
+\begin{equation}
+x_{k+1} = a x_k + w_k
+\end{equation}
+\begin{equation}
+y_k = x_k + v_k
+\end{equation}
+\begin{equation}
+w_k \sim \gauss{0}{q},
+v_k \sim \gauss{0}{r}
+\end{equation}
+
+\section{Equivalence of the batch and recursive forms of the Kalman filter}
+
+From Ref. \cite{sorenson1970}, the batch linear estimate for $x_k$ is optimal with respect to the following cost function:
+
+\begin{equation}
+J = \frac{1}{2} \quadr{(\vest{x}_0-\vec{\mu})}{P_0^{-1}} + 
+\frac{1}{2} \sum_{k=1}^N \quadr{(\veas{y}_k - H_k \vest{x}_k)}{R^{-1}} + 
+\frac{1}{2} \sum_{k=1}^N \quadr{(\vest{x}_k - \Phi_{k-1} \vest{x}_{k-1})}{Q^{-1}}
+\end{equation}
+
+For the scalar problem with $N = 2$, the first-order necessary conditions for optimality with respect to $\vest{x}_0,\vest{x}_1,\vest{x}_2$ yield the following linear expression:
+
+\begin{equation}
+\begin{bmatrix}
+\inv{p_0}+\frac{a^2}{q} & -\frac{a}{q} & 0\\
+-\frac{a}{q} & \inv{r} + \inv{q} + \frac{a^2}{q} & -\frac{a}{q} \\
+0 & -\frac{a}{q} & \inv{q}+\inv{r}
+\end{bmatrix}
+\begin{bmatrix}
+\est{x}_0 \\ \est{x}_1 \\ \est{x}_2
+\end{bmatrix} = \begin{bmatrix}
+\frac{\mu}{p_0} \\ \frac{\meas{y}_1}{r} \\ \frac{\meas{y}_2}{r}
+\end{bmatrix}
+\end{equation}
+
+Solving for $\est{x}_2$ yields the following expression:
+
+\begin{equation}
+\est{x}_2 = \inv{p_0a^4r + a^2qr + p_0a^2q + p_0a^2r + q^2 + 2qr + r^2} \begin{bmatrix}
+a^2q^2 & 
+p_0ra^3 + qra & 
+qr + q^2 + a^2p_0q + a^4p_0r + a^2qr
+\end{bmatrix}\begin{bmatrix}
+\mu \\ \meas{y}_1 \\ \meas{y}_2
+\end{bmatrix}
+\label{eq:batchkf}
+\end{equation}
+
+But this is exactly the expression obtained from recursion of the standard Kalman filter:
+
+\begin{equation}
+\est{x}_0 = \mu
+\end{equation}
+\begin{equation}
+p_1^{-} = a^2 p_0 + q
+\end{equation}
+\begin{equation}
+k_1 = \frac{p_1^{-}}{r+p_1^{-}}
+\end{equation}
+\begin{equation}
+\est{x}_1 = a\est{x}_0 + k_1(\meas{y}_1-a\est{x}_0)
+\end{equation}
+\begin{equation}
+p_1^{+} = (1-k_1)p_1^{-}
+\end{equation}
+\begin{equation}
+p_2^{-} = a^2 p_1^{+} + q
+\end{equation}
+\begin{equation}
+k_2 = \frac{p_2^{-}}{r+p_2^{-}}
+\end{equation}
+\begin{equation}
+\est{x}_2 = a\est{x}_1 + k_2(\meas{y}_2 - a\est{x}_1)
+\label{eq:x2_lkf}
+\end{equation}
+
+The algebra required to prove the equivalence of Eqs. \ref{eq:batchkf} and \ref{eq:x2_lkf} is tedious even for the scalar case.
+
+\section{MATLAB code for showing the equivalence of the first two recursions}
+
+The following code will compute the first two recursions of the sequential filter and compute the symbolic difference between the sequential value and the batch value for $N = 1$ and $N = 2$.
+The code can readily be extended for higher recursions if readers think that is necessary.
+
+\begin{verbatim}
+clear variables;
+close all;
+
+syms mu p0 q r a y1 y2 real;
+
+%% solution for the recursive KF
+x0s = mu;
+% propagated covariance at t1-
+p1s = a^2*p0 + q;
+k1 = p1s/(r+p1s);
+x1s = a*x0s + k1*(y1-a*x0s);
+% propagated covariance at t1+
+p1sp = (1-k1)*p1s;
+% propagated covariance at t2-
+p2s = a^2*p1sp + q;
+k2 = p2s/(r+p2s);
+x2s = a*x1s + k2*(y2-a*x1s);
+
+%% solution for the batch KF with 1 measurement
+M = [1/p0+a^2/q -a/q;
+-a/q 1/r+1/q];
+b = [mu/p0;
+y1/r];
+xsol1 = M\b;
+
+% print the error between the recursive and batch estimate
+simplify(xsol1(2) - x1s)
+
+%% solution for the batch KF with 2 measurements
+M = [1/p0 + a^2/q -a/q 0;
+-a/q 1/r+1/q+a^2/q -a/q;
+0 -a/q 1/r+1/q];
+b = [mu/p0;y1/r;y2/r];
+xsol2 = M\b;
+
+% print the error between the recursive and batch estimate
+simplify(xsol2(3) - x2s)
+\end{verbatim}

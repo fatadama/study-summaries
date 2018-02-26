@@ -1,0 +1,24 @@
+\documentclass[10pt]{memoir}
+
+\usepackage{ifthen}
+\usepackage{hyperref}
+
+\usepackage[margin=1.0in]{geometry}
+
+\usepackage{../tdw}
+
+% Turn off header and footer
+%\pagestyle{empty}
+
+ 
+\begin{document}
+
+%\footnotesize
+
+\input{../lyapunov-stability/nonlinear-stability.tex}
+\input{../estimation/batch-recursive-equivalence.tex}
+
+\bibliographystyle{plain}
+\bibliography{../refs}
+
+\end{document}
